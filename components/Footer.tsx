@@ -1,0 +1,60 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { CONTACT_INFO } from '../constants';
+
+const Footer: React.FC = () => {
+  return (
+    <footer className="bg-stone-900 text-stone-300 pt-16 pb-8">
+      <div className="container mx-auto px-4 grid md:grid-cols-3 gap-12">
+        {/* Brand */}
+        <div>
+          <h2 className="text-2xl font-serif font-bold text-saffron-400 mb-4">Ambika Jyotish</h2>
+          <p className="mb-6 text-sm leading-relaxed">
+            Where Your Destiny Meets Divine Intervention. We bridge the gap between human effort (Purusharth) and divine grace (Kripa).
+          </p>
+          <div className="text-saffron-200 font-semibold text-sm">
+            Pandit Anil Kumar Vyas
+          </div>
+        </div>
+
+        {/* Links */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Quick Links</h3>
+          <ul className="space-y-2 text-sm">
+            <li><NavLink to="/about" className="hover:text-saffron-400 transition-colors">About Panditji</NavLink></li>
+            <li><NavLink to="/services" className="hover:text-saffron-400 transition-colors">Astrology Services</NavLink></li>
+            <li><NavLink to="/pujas" className="hover:text-saffron-400 transition-colors">Vedic Pujas</NavLink></li>
+            <li><NavLink to="/vastu" className="hover:text-saffron-400 transition-colors">Vastu Shastra</NavLink></li>
+            <li><NavLink to="/e-puja" className="hover:text-saffron-400 transition-colors">NRI E-Puja</NavLink></li>
+          </ul>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <h3 className="text-white font-bold mb-4 uppercase tracking-wider text-sm">Contact Us</h3>
+          <ul className="space-y-3 text-sm">
+            <li className="flex items-start gap-3">
+              <span className="text-saffron-500">📍</span>
+              <span>{CONTACT_INFO.address}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-saffron-500">📞</span>
+              <span>{CONTACT_INFO.phone}</span>
+            </li>
+            <li className="flex items-center gap-3">
+              <span className="text-saffron-500">✉️</span>
+              <span>{CONTACT_INFO.email}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div className="container mx-auto px-4 mt-12 pt-8 border-t border-stone-800 text-center text-xs text-stone-500">
+        <p>&copy; {new Date().getFullYear()} Ambika Jyotish Kendra. All Rights Reserved.</p>
+        <p className="mt-2">Designed with Devotion.</p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

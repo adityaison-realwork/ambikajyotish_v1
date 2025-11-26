@@ -4,12 +4,14 @@ import { LayoutTemplate, Map, Factory, Compass, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../LanguageContext';
 import { VastuItem } from '../types';
+import BookingModal from '../components/BookingModal';
 
 const icons = [LayoutTemplate, LayoutTemplate, Factory, Map];
 
 const Vastu: React.FC = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedVastu, setSelectedVastu] = useState<any>(null);
 
   const vastuServices: VastuItem[] = t('vastuData') || [];
   
@@ -78,7 +80,15 @@ const Vastu: React.FC = () => {
                       <div className="flex-shrink-0 text-right md:min-w-[180px] pl-4 md:border-l border-stone-100">
                         <span className="block text-3xl font-bold text-stone-800">{service.price.split(' ')[0]}</span>
                         <span className="text-xs text-stone-500 uppercase tracking-wide font-bold">Starting Price</span>
-                        <button className="mt-4 w-full py-2 rounded-lg border border-stone-200 text-stone-600 text-sm font-semibold hover:bg-stone-50 hover:text-stone-900 transition-colors">
+                        <button 
+                          onClick={() => setSelectedVastu({
+                            name: service.service,
+                            price: service.price,
+                            description: service.scope,
+                            features: [`Scope: ${service.scope}`, `Deliverables: ${service.deliverables}`]
+                          })}
+                          className="mt-4 w-full py-2 rounded-lg bg-saffron-500 text-white text-sm font-bold hover:bg-saffron-600 transition-colors shadow-md shadow-saffron-200"
+                        >
                           Book Visit
                         </button>
                       </div>
@@ -91,6 +101,12 @@ const Vastu: React.FC = () => {
             )}
           </div>
         </motion.div>
+
+        <BookingModal 
+          isOpen={!!selectedVastu} 
+          onClose={() => setSelectedVastu(null)} 
+          item={selectedVastu}
+        />
       </div>
     </div>
   );

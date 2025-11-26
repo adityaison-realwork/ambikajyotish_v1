@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
-import { CheckCircle, Flame, Search } from 'lucide-react';
+import { CheckCircle, Flame, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../LanguageContext';
 import { PujaCategory, PujaItem } from '../types';
+import BookingModal from '../components/BookingModal';
 
 const Pujas: React.FC = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedPuja, setSelectedPuja] = useState<any>(null);
 
   const pujaCategories: PujaCategory[] = t('pujasData') || [];
 
@@ -19,6 +21,19 @@ const Pujas: React.FC = () => {
       item.whoNeedsIt.toLowerCase().includes(searchTerm.toLowerCase())
     )
   })).filter(cat => cat.items.length > 0);
+
+  const handleBook = (item: PujaItem, type: 'Standard' | 'Premium' | 'Special', price: string) => {
+    setSelectedPuja({
+      name: `${item.name} (${type})`,
+      price: price,
+      description: item.vidhi,
+      features: [
+        `Vidhi: ${item.vidhi}`,
+        type === 'Premium' ? 'Includes Samagri, Fruits, Flowers & Brahmin Bhojan' : 'Standard Puja Service',
+        type === 'Special' ? 'Maha-Anushthan / Extended Ritual' : 'Standard Ritual Duration'
+      ]
+    });
+  };
 
   return (
     <div className="bg-white min-h-screen py-20 relative z-10">
@@ -74,8 +89,7 @@ const Pujas: React.FC = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: itemIdx * 0.1 }}
-                      whileHover={{ y: -5 }}
-                      className="border border-stone-200 rounded-2xl p-8 hover:border-saffron-300 hover:shadow-xl transition-all bg-white relative overflow-hidden group"
+                      className="border border-stone-200 rounded-2xl p-8 bg-white relative overflow-hidden group hover:border-saffron-300 hover:shadow-xl transition-all"
                     >
                       <div className="absolute top-0 right-0 w-24 h-24 bg-saffron-50 rounded-bl-[100px] -mr-4 -mt-4 transition-all group-hover:bg-saffron-100"></div>
                       
@@ -95,25 +109,49 @@ const Pujas: React.FC = () => {
                         <p className="text-stone-800 italic font-serif bg-stone-50 p-3 rounded-lg border-l-2 border-saffron-300">"{item.vidhi}"</p>
                       </div>
 
-                      <div className="space-y-3 pt-6 border-t border-stone-100 relative z-10">
+                      <div className="space-y-4 pt-6 border-t border-stone-100 relative z-10">
                         {item.priceStandard && (
-                          <div className="flex justify-between items-center">
-                            <span className="text-sm text-stone-500 font-medium">Standard</span>
-                            <span className="font-bold text-stone-800 text-lg">{item.priceStandard}</span>
+                          <div className="flex justify-between items-center group/btn">
+                            <div>
+                                <span className="text-sm text-stone-500 font-medium block">Standard</span>
+                                <span className="font-bold text-stone-800 text-lg">{item.priceStandard}</span>
+                            </div>
+                            <button 
+                                onClick={() => handleBook(item, 'Standard', item.priceStandard!)}
+                                className="px-4 py-2 bg-stone-100 hover:bg-stone-200 text-stone-700 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                            >
+                                Book
+                            </button>
                           </div>
                         )}
                         {item.pricePremium && (
                           <div className="flex justify-between items-center p-3 -mx-3 rounded-lg bg-saffron-50/50 border border-saffron-100">
-                            <span className="text-sm text-saffron-800 font-bold flex items-center gap-2">
-                              <CheckCircle size={14} /> Premium (Recommended)
-                            </span>
-                            <span className="font-bold text-saffron-800 text-lg">{item.pricePremium}</span>
+                            <div>
+                                <span className="text-sm text-saffron-800 font-bold flex items-center gap-2">
+                                <CheckCircle size={14} /> Premium
+                                </span>
+                                <span className="font-bold text-saffron-800 text-lg">{item.pricePremium}</span>
+                            </div>
+                            <button 
+                                onClick={() => handleBook(item, 'Premium', item.pricePremium!)}
+                                className="px-5 py-2 bg-saffron-500 hover:bg-saffron-600 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors shadow-md shadow-saffron-200"
+                            >
+                                Book
+                            </button>
                           </div>
                         )}
                         {item.priceExtra && (
                           <div className="flex justify-between items-center bg-stone-900 p-3 rounded-lg text-white mt-2">
-                             <span className="text-xs font-bold uppercase tracking-wider text-saffron-400">Special</span>
-                            <span className="font-bold">{item.priceExtra}</span>
+                             <div>
+                                <span className="text-xs font-bold uppercase tracking-wider text-saffron-400 block">Special</span>
+                                <span className="font-bold">{item.priceExtra}</span>
+                             </div>
+                             <button 
+                                onClick={() => handleBook(item, 'Special', item.priceExtra!)}
+                                className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold uppercase tracking-wider transition-colors"
+                             >
+                                Inquire
+                             </button>
                           </div>
                         )}
                       </div>
@@ -148,15 +186,28 @@ const Pujas: React.FC = () => {
                  { name: "Griha Pravesh (Grand Havan)", price: "₹11,000" },
                  { name: "Engagement Ceremony", price: "₹5,100" },
               ].map((ev, i) => (
-                <div key={i} className="text-center md:text-left border-b border-white/10 pb-4 hover:border-saffron-500/50 transition-colors">
-                  <span className="block text-lg font-medium text-saffron-100 mb-2">{ev.name}</span>
-                  <span className="block text-2xl font-bold text-white">{ev.price}</span>
+                <div key={i} className="flex justify-between items-center border-b border-white/10 pb-4 hover:border-saffron-500/50 transition-colors group">
+                   <div>
+                      <span className="block text-lg font-medium text-saffron-100 mb-1">{ev.name}</span>
+                      <span className="block text-2xl font-bold text-white">{ev.price}</span>
+                   </div>
+                   <button 
+                      onClick={() => handleBook(ev as any, 'Standard', ev.price)}
+                      className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-saffron-500 transition-colors"
+                   >
+                       <ArrowRight size={18} />
+                   </button>
                 </div>
               ))}
             </div>
           </div>
         </motion.section>
 
+        <BookingModal 
+          isOpen={!!selectedPuja} 
+          onClose={() => setSelectedPuja(null)} 
+          item={selectedPuja}
+        />
       </div>
     </div>
   );

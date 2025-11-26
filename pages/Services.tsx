@@ -1,13 +1,15 @@
 
 import React, { useState } from 'react';
-import { Clock, Sparkles, Search } from 'lucide-react';
+import { Clock, Sparkles, Search, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../LanguageContext';
 import { ServiceItem } from '../types';
+import BookingModal from '../components/BookingModal';
 
 const Services: React.FC = () => {
   const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedService, setSelectedService] = useState<any>(null);
 
   const services: ServiceItem[] = t('servicesData') || [];
   
@@ -74,15 +76,23 @@ const Services: React.FC = () => {
                   <p className="text-stone-600 leading-relaxed mb-6">
                     {service.description}
                   </p>
-                </div>
-                <div className="bg-stone-50 px-8 py-5 border-t border-stone-100 flex justify-between items-center mt-auto">
-                  <div className="flex items-center gap-2 text-stone-500 text-xs font-bold uppercase tracking-wider">
+                  
+                  <div className="flex items-center gap-2 text-stone-500 text-xs font-bold uppercase tracking-wider mb-4">
                     <Clock size={14} className="text-saffron-500" />
                     {service.duration}
                   </div>
+                </div>
+                
+                <div className="bg-stone-50 px-8 py-5 border-t border-stone-100 flex justify-between items-center mt-auto gap-4">
                   <div className="flex items-center gap-1 text-saffron-700 font-bold text-xl">
                     {service.price}
                   </div>
+                  <button 
+                    onClick={() => setSelectedService(service)}
+                    className="bg-saffron-500 hover:bg-saffron-600 text-white px-6 py-2 rounded-full font-bold text-sm transition-colors flex items-center gap-2"
+                  >
+                    Book Now <ArrowRight size={16} />
+                  </button>
                 </div>
               </motion.div>
             ))
@@ -92,6 +102,13 @@ const Services: React.FC = () => {
              </div>
           )}
         </motion.div>
+
+        {/* Booking Modal */}
+        <BookingModal 
+          isOpen={!!selectedService} 
+          onClose={() => setSelectedService(null)} 
+          item={selectedService}
+        />
       </div>
     </div>
   );

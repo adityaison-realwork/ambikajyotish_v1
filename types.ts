@@ -1,3 +1,6 @@
+
+export type Language = 'EN' | 'HI' | 'SA';
+
 export interface ServiceItem {
   name: string;
   description: string;
@@ -27,7 +30,34 @@ export interface VastuItem {
   price: string;
 }
 
-export interface NavItem {
-  label: string;
-  path: string;
+export interface Review {
+  id: number;
+  name: string;
+  location: string;
+  rating: number;
+  text: string;
+  date: string;
+  service: string;
+  image?: string;
+}
+
+export interface Mantra {
+  sanskrit: string;
+  english: string;
+  meaning: string;
+}
+
+export interface TranslationStructure {
+  nav: { [key: string]: string };
+  hero: { [key: string]: string };
+  headings: { [key: string]: string };
+  home: { [key: string]: string };
+  aboutPage: any;
+  contactPage: any;
+  footer: any;
+  servicesData: ServiceItem[];
+  pujasData: PujaCategory[];
+  vastuData: VastuItem[];
+  epujaData: any;
+  reviewsData: Review[];
 }

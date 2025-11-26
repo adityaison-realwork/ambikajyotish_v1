@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -9,6 +9,10 @@ import Pujas from './pages/Pujas';
 import Vastu from './pages/Vastu';
 import EPuja from './pages/EPuja';
 import Contact from './pages/Contact';
+import Reviews from './pages/Reviews';
+import Loader from './components/Loader';
+import BackgroundSymbols from './components/BackgroundSymbols';
+import { LanguageProvider } from './LanguageContext';
 
 // Scroll to top on route change
 const ScrollToTop = () => {
@@ -19,11 +23,29 @@ const ScrollToTop = () => {
   return null;
 };
 
-const App: React.FC = () => {
+// Layout component to handle loader logic
+const Layout: React.FC = () => {
+  const location = useLocation();
+  const [loading, setLoading] = useState(true);
+
+  // Initial Load
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2500); // 2.5s initial load for Mantra reading
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Route Change Loader (optional, keep it brief)
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 800); // Quick transition
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="flex flex-col min-h-screen">
+    <>
+      <Loader isVisible={loading} />
+      <BackgroundSymbols />
+      <div className="flex flex-col min-h-screen relative z-10">
         <Navbar />
         <main className="flex-grow">
           <Routes>
@@ -33,12 +55,24 @@ const App: React.FC = () => {
             <Route path="/pujas" element={<Pujas />} />
             <Route path="/vastu" element={<Vastu />} />
             <Route path="/e-puja" element={<EPuja />} />
+            <Route path="/reviews" element={<Reviews />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
         <Footer />
       </div>
-    </Router>
+    </>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <LanguageProvider>
+      <Router>
+        <ScrollToTop />
+        <Layout />
+      </Router>
+    </LanguageProvider>
   );
 };
 

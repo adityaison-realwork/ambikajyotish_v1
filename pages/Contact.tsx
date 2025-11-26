@@ -1,11 +1,15 @@
+
 import React from 'react';
 import { CONTACT_INFO } from '../constants';
 import { Phone, Mail, MapPin, Smartphone, Landmark, AlertCircle, ArrowUpRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../LanguageContext';
 
 const Contact: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
-    <div className="bg-stone-50 min-h-screen py-20">
+    <div className="bg-stone-50 min-h-screen py-20 relative z-10">
       <div className="container mx-auto px-4">
         
         <div className="grid lg:grid-cols-2 gap-16">
@@ -18,9 +22,9 @@ const Contact: React.FC = () => {
             className="space-y-10"
           >
             <div>
-               <h1 className="text-5xl font-serif font-bold text-saffron-900 mb-6">Connect with Divine</h1>
+               <h1 className="text-5xl font-serif font-bold text-saffron-900 mb-6">{t('contactPage.title')}</h1>
                <p className="text-stone-600 text-lg leading-relaxed">
-                 Ready to resolve life's complexities? Reach out to us for bookings or inquiries. Panditji is available for consultation by appointment.
+                 {t('contactPage.desc')}
                </p>
             </div>
 
@@ -30,7 +34,7 @@ const Contact: React.FC = () => {
                   <MapPin size={28} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-stone-800 mb-2">Visit Us</h3>
+                  <h3 className="font-bold text-xl text-stone-800 mb-2">{t('contactPage.visit')}</h3>
                   <p className="text-stone-600 leading-relaxed">{CONTACT_INFO.address}</p>
                 </div>
               </div>
@@ -42,7 +46,7 @@ const Contact: React.FC = () => {
                   <Phone size={28} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-stone-800 mb-2">Call / WhatsApp</h3>
+                  <h3 className="font-bold text-xl text-stone-800 mb-2">{t('contactPage.call')}</h3>
                   <p className="text-stone-600 mb-1 font-medium">Direct: {CONTACT_INFO.phone}</p>
                   <p className="text-stone-500">WhatsApp: {CONTACT_INFO.whatsapp}</p>
                 </div>
@@ -55,7 +59,7 @@ const Contact: React.FC = () => {
                   <Mail size={28} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xl text-stone-800 mb-2">Email</h3>
+                  <h3 className="font-bold text-xl text-stone-800 mb-2">{t('contactPage.email')}</h3>
                   <p className="text-stone-600 mb-1 font-medium">{CONTACT_INFO.email}</p>
                   <p className="text-stone-500">anilvyas@ambikajyotish.com</p>
                 </div>
@@ -80,10 +84,10 @@ const Contact: React.FC = () => {
              className="space-y-8"
           >
             <div>
-              <h2 className="text-3xl font-serif font-bold text-saffron-900 mb-6">Payment Information</h2>
+              <h2 className="text-3xl font-serif font-bold text-saffron-900 mb-6">{t('contactPage.paymentTitle')}</h2>
               <div className="bg-red-50 border-l-4 border-red-500 text-red-800 px-6 py-4 rounded-r-lg text-sm flex items-start gap-3 shadow-sm">
                 <AlertCircle size={20} className="mt-0.5 flex-shrink-0" />
-                <span className="font-medium">Important: 50% Advance is mandatory to confirm your Slot and book Brahmins.</span>
+                <span className="font-medium">{t('contactPage.paymentImportant')}</span>
               </div>
             </div>
 
@@ -118,7 +122,7 @@ const Contact: React.FC = () => {
                  <div className="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center text-stone-700">
                    <Landmark size={24} />
                  </div>
-                 <h3 className="font-bold text-xl text-stone-800">Bank Transfer Details</h3>
+                 <h3 className="font-bold text-xl text-stone-800">{t('contactPage.bankDetails')}</h3>
               </div>
               <div className="space-y-5 text-sm relative z-10">
                 <div className="flex justify-between border-b border-gray-100 pb-2">

@@ -1,12 +1,15 @@
+
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Phone } from 'lucide-react';
+import { Menu, X, Sun, Phone, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../LanguageContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { language, toggleLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,13 +24,14 @@ const Navbar: React.FC = () => {
   }, [location]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Pujas', path: '/pujas' },
-    { name: 'Vastu', path: '/vastu' },
-    { name: 'E-Puja', path: '/e-puja' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.about'), path: '/about' },
+    { name: t('nav.services'), path: '/services' },
+    { name: t('nav.pujas'), path: '/pujas' },
+    { name: t('nav.vastu'), path: '/vastu' },
+    { name: t('nav.epuja'), path: '/e-puja' },
+    { name: t('nav.reviews'), path: '/reviews' },
+    { name: t('nav.contact'), path: '/contact' },
   ];
 
   return (
@@ -69,10 +73,10 @@ const Navbar: React.FC = () => {
           </NavLink>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex space-x-8 items-center">
+          <div className="hidden lg:flex space-x-6 items-center">
             {navLinks.map((link) => (
               <NavLink 
-                key={link.name} 
+                key={link.path} 
                 to={link.path}
                 className={({ isActive }) => 
                   `relative font-medium text-sm tracking-wide transition-colors duration-200 hover:text-saffron-600 ${isActive ? 'text-saffron-600 font-semibold' : 'text-stone-700'}`
@@ -91,21 +95,40 @@ const Navbar: React.FC = () => {
                 )}
               </NavLink>
             ))}
+            
+            {/* Language Toggle */}
+            <button 
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 bg-stone-100 px-3 py-1.5 rounded-full text-xs font-bold text-stone-600 hover:bg-saffron-100 hover:text-saffron-700 transition-colors"
+            >
+              <Globe size={14} />
+              <span>{language === 'EN' ? 'EN' : language === 'HI' ? 'HI' : 'SA'}</span>
+            </button>
+
             <NavLink to="/contact">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-gradient-to-r from-saffron-600 to-saffron-500 hover:from-saffron-700 hover:to-saffron-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-saffron-500/30"
               >
-                Book Now
+                {t('nav.book')}
               </motion.button>
             </NavLink>
           </div>
 
           {/* Mobile Toggle */}
-          <button className="lg:hidden text-stone-700 p-2" onClick={() => setIsOpen(!isOpen)}>
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          <div className="lg:hidden flex items-center gap-4">
+             <button 
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 bg-stone-100 px-3 py-1.5 rounded-full text-xs font-bold text-stone-600"
+            >
+              <Globe size={14} />
+              <span>{language}</span>
+            </button>
+            <button className="text-stone-700 p-2" onClick={() => setIsOpen(!isOpen)}>
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -120,15 +143,16 @@ const Navbar: React.FC = () => {
               <div className="flex flex-col p-6 space-y-4">
                 {navLinks.map((link) => (
                   <NavLink 
-                    key={link.name} 
+                    key={link.path} 
                     to={link.path}
+                    onClick={() => setIsOpen(false)}
                     className="text-stone-700 font-medium py-3 border-b border-gray-50 text-lg hover:text-saffron-600 hover:pl-2 transition-all"
                   >
                     {link.name}
                   </NavLink>
                 ))}
-                <NavLink to="/contact" className="bg-saffron-600 text-white text-center py-3 rounded-lg font-bold mt-4 shadow-md">
-                  Book Appointment
+                <NavLink to="/contact" onClick={() => setIsOpen(false)} className="bg-saffron-600 text-white text-center py-3 rounded-lg font-bold mt-4 shadow-md">
+                  {t('nav.book')}
                 </NavLink>
               </div>
             </motion.div>

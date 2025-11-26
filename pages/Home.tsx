@@ -1,77 +1,103 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Star, ShieldCheck, Globe, ArrowRight, Activity, Calendar } from 'lucide-react';
-import { HERO_IMAGE, PANDIT_IMAGE } from '../constants';
-import { ResponsiveContainer, RadialBarChart, RadialBar, Legend, Tooltip } from 'recharts';
-import { motion } from 'framer-motion';
-
-const data = [
-  { name: 'Career', uv: 90, fill: '#d97200' },
-  { name: 'Health', uv: 80, fill: '#f59300' },
-  { name: 'Marriage', uv: 85, fill: '#ffb314' },
-  { name: 'Finance', uv: 75, fill: '#ffd047' },
-  { name: 'Spirituality', uv: 95, fill: '#ffe685' },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: "spring", stiffness: 50 }
-  }
-};
+import { Star, ArrowRight, Phone, Mail, MapPin, Sparkles, Globe, Shield, Flame, Sun, Moon } from 'lucide-react';
+import { PANDIT_IMAGE } from '../constants';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '../LanguageContext';
+import { Review } from '../types';
 
 const Home: React.FC = () => {
+  const { t } = useLanguage();
+  
+  const servicesList = [
+    { 
+      id: 0,
+      title: t('nav.services'), 
+      subtitle: "Horoscope Analysis",
+      icon: <Sun className="w-6 h-6 md:w-8 md:h-8" />, 
+      image: "https://images.unsplash.com/photo-1532012197267-da84d127e765?q=80&w=2500&auto=format&fit=crop",
+      desc: t('servicesData')?.[0]?.description, 
+      link: "/services",
+      color: "bg-orange-500" 
+    },
+    { 
+      id: 1,
+      title: t('nav.pujas'), 
+      subtitle: "Vedic Rituals",
+      icon: <Flame className="w-6 h-6 md:w-8 md:h-8" />, 
+      image: "https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=2500&auto=format&fit=crop",
+      desc: t('pujasData')?.[0]?.description, 
+      link: "/pujas",
+      color: "bg-red-500" 
+    },
+    { 
+      id: 2,
+      title: t('nav.vastu'), 
+      subtitle: "Space Energy",
+      icon: <Shield className="w-6 h-6 md:w-8 md:h-8" />, 
+      image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=2500&auto=format&fit=crop",
+      desc: t('vastuData')?.[0]?.scope, 
+      link: "/vastu",
+      color: "bg-amber-500" 
+    },
+    { 
+      id: 3,
+      title: t('nav.epuja'), 
+      subtitle: "Online Services",
+      icon: <Globe className="w-6 h-6 md:w-8 md:h-8" />, 
+      image: "https://images.unsplash.com/photo-1582344733350-a35576a927b8?q=80&w=2500&auto=format&fit=crop",
+      desc: t('epujaData')?.subtitle, 
+      link: "/e-puja",
+      color: "bg-saffron-500" 
+    },
+  ];
+
+  const reviews: Review[] = t('reviewsData') || [];
+
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-hidden bg-white">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center bg-saffron-50 pt-12 md:pt-0">
-        {/* Background Decorative Elements */}
-        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-saffron-200/50 to-transparent skew-x-12 translate-x-32 z-0"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-saffron-300/20 rounded-full blur-3xl -translate-x-20 translate-y-20 z-0"></div>
+      <section className="relative min-h-[95vh] flex items-center bg-saffron-50 pt-20 md:pt-0 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-saffron-200/40 to-transparent skew-x-12 translate-x-32 z-0"></div>
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute bottom-0 left-0 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl -translate-x-20 translate-y-20 z-0"
+        ></motion.div>
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             
             {/* Text Content */}
             <motion.div 
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
               className="max-w-2xl"
             >
-              <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-saffron-200 px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-sm">
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-saffron-200 px-4 py-2 rounded-full text-sm font-semibold mb-6 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-saffron-500 animate-pulse"></span>
                 <span className="text-saffron-800 tracking-wide uppercase text-xs font-bold">Shree Ambika Jyotish Kendra</span>
-              </motion.div>
+              </div>
               
-              <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-[1.1] text-stone-900">
-                Where Your Destiny Meets <span className="text-transparent bg-clip-text bg-gradient-to-r from-saffron-600 to-orange-500">Divine Will</span>
-              </motion.h1>
+              <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 leading-[1.1] text-stone-900">
+                {t('hero.title')}
+              </h1>
               
-              <motion.p variants={itemVariants} className="text-xl text-stone-600 mb-8 leading-relaxed font-light">
-                Bridge the gap between human effort <span className="italic font-serif text-saffron-700">(Purusharth)</span> and divine grace <span className="italic font-serif text-saffron-700">(Kripa)</span> with Pandit Anil Kumar Vyas.
-              </motion.p>
+              <p className="text-xl text-stone-600 mb-8 leading-relaxed font-light">
+                {t('hero.subtitle')}
+              </p>
               
-              <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <NavLink to="/contact">
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="w-full sm:w-auto bg-gradient-to-r from-saffron-600 to-saffron-500 text-white text-lg px-8 py-4 rounded-full font-bold shadow-xl shadow-saffron-500/30 flex items-center justify-center gap-2"
                   >
-                    Book Consultation <ArrowRight size={20} />
+                    {t('hero.cta1')} <ArrowRight size={20} />
                   </motion.button>
                 </NavLink>
                 <NavLink to="/pujas">
@@ -80,12 +106,12 @@ const Home: React.FC = () => {
                     whileTap={{ scale: 0.95 }}
                     className="w-full sm:w-auto bg-white/50 backdrop-blur-sm border border-saffron-200 text-saffron-800 text-lg px-8 py-4 rounded-full font-bold transition-all flex items-center justify-center hover:shadow-lg"
                   >
-                    Explore Pujas
+                    {t('hero.cta2')}
                   </motion.button>
                 </NavLink>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants} className="mt-12 flex items-center gap-8 text-stone-500">
+              <div className="mt-12 flex items-center gap-8 text-stone-500">
                 <div className="flex -space-x-4">
                   {[1,2,3,4].map(i => (
                     <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-stone-200 flex items-center justify-center text-xs overflow-hidden">
@@ -94,8 +120,8 @@ const Home: React.FC = () => {
                   ))}
                   <div className="w-10 h-10 rounded-full border-2 border-white bg-saffron-100 flex items-center justify-center text-xs font-bold text-saffron-700">+2k</div>
                 </div>
-                <div className="text-sm">Trusted by <span className="font-bold text-stone-800">2000+</span> Devotees</div>
-              </motion.div>
+                <div className="text-sm"> <span className="font-bold text-stone-800">{t('hero.trust')}</span></div>
+              </div>
             </motion.div>
 
             {/* Image Layering Effect */}
@@ -132,136 +158,286 @@ const Home: React.FC = () => {
                    </div>
                  </div>
                </motion.div>
-
-               <motion.div 
-                  animate={{ y: [0, 10, 0] }}
-                  transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 1 }}
-                  className="absolute bottom-32 -right-10 bg-white p-4 rounded-xl shadow-lg border border-saffron-50 z-30"
-               >
-                 <div className="flex items-center gap-3">
-                   <div className="bg-green-100 p-2 rounded-lg text-green-600"><ShieldCheck size={20} /></div>
-                   <div>
-                     <div className="text-xs text-stone-500 font-bold uppercase">Rituals</div>
-                     <div className="font-serif font-bold text-lg">100% Vedic</div>
-                   </div>
-                 </div>
-               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* The Promise - Glassmorphism */}
-      <section className="py-24 bg-white relative">
+      {/* About Glimpse */}
+      <section className="py-20 bg-white relative z-20">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl font-serif font-bold text-saffron-900 mb-6">The Ambika Promise</h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-saffron-500 to-transparent mb-8"></div>
-              
-              <blockquote className="text-2xl font-serif text-stone-600 mb-8 leading-relaxed italic border-l-4 border-saffron-300 pl-6 py-2 bg-saffron-50/50 rounded-r-lg">
-                "We do not sell fear; we offer solutions. We bridge the gap between human effort and divine grace."
-              </blockquote>
-              
-              <p className="text-stone-600 mb-8 text-lg">
-                Whether you are battling a stagnant career, marital discord, or health crises, our rituals are performed with 100% Shastra-Suddha Vidhi.
-              </p>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex items-start gap-4 p-5 bg-white rounded-xl shadow-md border border-stone-100 hover:border-saffron-200 transition-colors">
-                  <div className="bg-saffron-100 p-3 rounded-lg text-saffron-600"><ShieldCheck size={24} /></div>
-                  <div>
-                    <span className="font-bold text-stone-900 block mb-1">Authentic Vidhi</span>
-                    <span className="text-sm text-stone-500">No shortcuts, pure scripture based.</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4 p-5 bg-white rounded-xl shadow-md border border-stone-100 hover:border-saffron-200 transition-colors">
-                  <div className="bg-blue-100 p-3 rounded-lg text-blue-600"><Globe size={24} /></div>
-                  <div>
-                    <span className="font-bold text-stone-900 block mb-1">Global Reach</span>
-                    <span className="text-sm text-stone-500">Live streaming for NRIs worldwide.</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-            
-            {/* Visual Flair: Planetary Chart */}
+          <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div 
-               initial={{ opacity: 0, scale: 0.9 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               viewport={{ once: true }}
-               transition={{ duration: 0.6 }}
-               className="bg-stone-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden text-white"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="relative"
             >
-               <div className="absolute top-0 right-0 p-32 bg-saffron-500 opacity-10 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>
-              <h3 className="text-xl font-serif font-bold text-saffron-100 mb-4 relative z-10">Holistic Life Balance</h3>
-              <div className="h-72 w-full relative z-10">
-                <ResponsiveContainer width="100%" height="100%">
-                  <RadialBarChart cx="50%" cy="50%" innerRadius="20%" outerRadius="100%" barSize={15} data={data}>
-                    <RadialBar
-                      label={{ position: 'insideStart', fill: '#fff', fontSize: '10px' }}
-                      background={{ fill: '#333' }}
-                      dataKey="uv"
-                    />
-                    <Legend iconSize={10} layout="vertical" verticalAlign="middle" wrapperStyle={{top: '50%', right: 0, transform: 'translate(0, -50%)', lineHeight: '24px', color: '#ccc'}} />
-                    <Tooltip contentStyle={{backgroundColor: '#333', border: 'none', borderRadius: '8px', color: '#fff'}} />
-                  </RadialBarChart>
-                </ResponsiveContainer>
-              </div>
-              <p className="text-xs text-center text-stone-400 mt-4 relative z-10">Visual representation of improved life aspects.</p>
+               <div className="w-full h-96 bg-stone-100 rounded-2xl overflow-hidden shadow-2xl rotate-2">
+                 <img src="https://images.unsplash.com/photo-1605218427368-35b8042cd024?q=80&w=2000&auto=format&fit=crop" className="w-full h-full object-cover" alt="Temple" />
+               </div>
+               <div className="absolute -bottom-6 -right-6 bg-saffron-600 text-white p-6 rounded-xl shadow-lg max-w-xs">
+                 <p className="font-serif font-bold text-xl mb-2">"Astrology is the eye of the Vedas."</p>
+                 <p className="text-saffron-200 text-sm">- Pandit Anil Kumar Vyas</p>
+               </div>
+            </motion.div>
+            <motion.div
+               initial={{ opacity: 0, x: 20 }}
+               whileInView={{ opacity: 1, x: 0 }}
+               viewport={{ once: true }}
+            >
+              <h2 className="text-sm font-bold text-saffron-600 uppercase tracking-widest mb-2">{t('headings.about')}</h2>
+              <h3 className="text-4xl font-serif font-bold text-stone-900 mb-6">{t('home.aboutTitle')}</h3>
+              <p className="text-stone-600 leading-relaxed text-lg mb-6">
+                {t('home.aboutDesc')}
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3 text-stone-700 font-medium"><div className="w-2 h-2 bg-saffron-500 rounded-full"></div> {t('aboutPage.edu1')}</li>
+                <li className="flex items-center gap-3 text-stone-700 font-medium"><div className="w-2 h-2 bg-saffron-500 rounded-full"></div> {t('aboutPage.edu3')}</li>
+              </ul>
+              <NavLink to="/about" className="text-saffron-700 font-bold hover:text-saffron-900 flex items-center gap-2">{t('home.aboutLink')} <ArrowRight size={16}/></NavLink>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Services Preview Cards */}
-      <section className="py-24 bg-saffron-50 relative">
-        <div className="container mx-auto px-4">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-serif font-bold text-saffron-900 mb-4">Divine Services</h2>
-            <p className="text-stone-600 max-w-2xl mx-auto text-lg">Ancient wisdom tailored for modern problems. Choose your path to clarity.</p>
-          </motion.div>
+      {/* NEW: Divine Services Section - Scroll Animated Cards (Fixed & Themed) */}
+      <section className="py-24 bg-gradient-to-b from-white to-saffron-50 relative overflow-hidden">
+        {/* Decorative Background */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.05]">
+           <div className="absolute top-20 left-10 text-9xl text-saffron-500 font-serif">🕉</div>
+           <div className="absolute bottom-20 right-10 text-9xl text-saffron-500 font-serif">卐</div>
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-saffron-200 rounded-full blur-[100px] opacity-20"></div>
+        </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: "Vedic Astrology", icon: <Star className="w-10 h-10" />, desc: "Precise Kundali analysis for career, marriage, and health.", link: "/services", color: "from-purple-500 to-indigo-600" },
-              { title: "Karmakand Rituals", icon: <div className="text-3xl">🕉️</div>, desc: "Dosha Nivaran, Havan, and Pujas performed with purity.", link: "/pujas", color: "from-saffron-500 to-orange-600" },
-              { title: "Vastu Shastra", icon: <div className="text-3xl">🏡</div>, desc: "Balance the energy of your space using Panch Mahabhuta.", link: "/vastu", color: "from-emerald-500 to-teal-600" },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Section Header */}
+          <div className="text-center mb-20">
+             <motion.span 
+               initial={{ opacity: 0, y: 10 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               className="text-saffron-600 font-bold tracking-widest uppercase text-sm"
+             >
+               {t('headings.services')}
+             </motion.span>
+             <motion.h2 
+               initial={{ opacity: 0, y: 10 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ delay: 0.1 }}
+               className="text-4xl md:text-5xl font-serif font-bold text-stone-900 mt-3"
+             >
+               {t('home.servicesTitle')}
+             </motion.h2>
+             <motion.div 
+               initial={{ width: 0 }}
+               whileInView={{ width: 100 }}
+               viewport={{ once: true }}
+               className="h-1 bg-saffron-500 mx-auto mt-6 rounded-full"
+             />
+             <p className="mt-6 text-stone-600 max-w-2xl mx-auto text-lg">{t('home.servicesSubtitle')}</p>
+          </div>
+
+          {/* Cards List */}
+          <div className="space-y-24">
+            {servicesList.map((service, index) => (
+              <motion.div 
+                key={service.id}
+                initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.2 }}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 group"
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+                className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-20 group`}
               >
-                <div className={`h-2 bg-gradient-to-r ${item.color}`}></div>
-                <div className="p-8">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center text-white mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    {item.icon}
+                {/* Image Side */}
+                <div className="w-full lg:w-1/2 relative">
+                  <div className="absolute inset-0 bg-saffron-500/20 rounded-3xl transform rotate-3 transition-transform group-hover:rotate-6"></div>
+                  <div className="absolute inset-0 bg-orange-400/20 rounded-3xl transform -rotate-3 transition-transform group-hover:-rotate-6"></div>
+                  <div className="relative rounded-3xl overflow-hidden shadow-2xl h-[350px] md:h-[450px] border-4 border-white">
+                    <img 
+                      src={service.image} 
+                      alt={service.title} 
+                      className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+                    />
+                    {/* Golden Overlay on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-saffron-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   </div>
-                  <h3 className="text-2xl font-serif font-bold mb-3 text-stone-800">{item.title}</h3>
-                  <p className="text-stone-600 mb-8 leading-relaxed">{item.desc}</p>
-                  <NavLink to={item.link} className="inline-flex items-center text-saffron-700 font-bold hover:text-saffron-600 group-hover:gap-2 transition-all">
-                    Explore Service <ArrowRight size={18} className="ml-1" />
+                </div>
+
+                {/* Content Side */}
+                <div className="w-full lg:w-1/2 text-center lg:text-left">
+                  <div className={`inline-flex p-4 rounded-2xl ${service.color} text-white mb-6 shadow-lg transform group-hover:scale-110 transition-transform duration-300`}>
+                    {service.icon}
+                  </div>
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold text-stone-800 mb-4">
+                    {service.title}
+                  </h3>
+                  <p className="text-saffron-600 font-bold text-sm mb-6 uppercase tracking-wider flex items-center justify-center lg:justify-start gap-2">
+                    <span className="w-8 h-0.5 bg-saffron-600"></span> {service.subtitle}
+                  </p>
+                  <p className="text-stone-600 text-lg leading-relaxed mb-8">
+                    {service.desc}
+                  </p>
+                  <NavLink to={service.link}>
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="bg-white border-2 border-saffron-500 text-saffron-700 px-8 py-3 rounded-full font-bold hover:bg-saffron-500 hover:text-white transition-all shadow-md flex items-center gap-2 mx-auto lg:mx-0 group-hover:shadow-saffron-200"
+                    >
+                      Explore Service <ArrowRight size={18} />
+                    </motion.button>
                   </NavLink>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Reviews Marquee */}
+      <section className="py-20 bg-saffron-50/50 overflow-hidden">
+         <div className="container mx-auto px-4 mb-10 text-center">
+            <h2 className="text-3xl font-serif font-bold text-stone-800">{t('home.reviewsTitle')}</h2>
+         </div>
+         <div className="relative w-full">
+            <motion.div 
+               className="flex space-x-8 w-max"
+               animate={{ x: [0, -1000] }}
+               transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
+            >
+               {[...reviews, ...reviews].map((review, i) => (
+                  <div key={i} className="w-80 bg-white p-6 rounded-xl border border-saffron-100 shadow-sm flex-shrink-0">
+                     <div className="flex text-saffron-500 mb-2">
+                        {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="currentColor" />)}
+                     </div>
+                     <p className="text-stone-600 text-sm italic mb-4 line-clamp-3">"{review.text}"</p>
+                     <div className="flex items-center gap-3">
+                        <img src={review.image} alt={review.name} className="w-10 h-10 rounded-full" />
+                        <div>
+                           <p className="font-bold text-stone-800 text-sm">{review.name}</p>
+                           <p className="text-xs text-stone-400">{review.location}</p>
+                        </div>
+                     </div>
+                  </div>
+               ))}
+            </motion.div>
+         </div>
+      </section>
+
+      {/* Portal of Connection (Contact & Pandit Info) */}
+      <section className="relative py-32 overflow-hidden bg-stone-950">
+         {/* Background Parallax */}
+         <div className="absolute inset-0 opacity-40">
+           <img src="https://images.unsplash.com/photo-1545239351-ef35f43d514b?q=80&w=2500&auto=format&fit=crop" alt="Universe" className="w-full h-full object-cover" />
+         </div>
+         <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/90 to-transparent"></div>
+
+         <div className="container mx-auto px-4 relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+               {/* Left: Call To Action Text */}
+               <motion.div
+                 initial={{ opacity: 0, x: -50 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+                 className="space-y-8"
+               >
+                 <div className="inline-block px-4 py-1 rounded-full bg-saffron-500/10 border border-saffron-500/30 text-saffron-400 text-xs font-bold uppercase tracking-widest">
+                    Connect with the Divine
+                 </div>
+                 <h2 className="text-5xl md:text-6xl font-serif font-bold text-white leading-tight">
+                    {t('home.ctaTitle')}
+                 </h2>
+                 <p className="text-xl text-stone-400 leading-relaxed max-w-lg">
+                    {t('home.ctaSubtitle')}
+                 </p>
+                 <div className="flex flex-wrap gap-4">
+                    <NavLink to="/contact">
+                       <motion.button 
+                         whileHover={{ scale: 1.05 }}
+                         whileTap={{ scale: 0.95 }}
+                         className="bg-saffron-500 text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-saffron-500/25 flex items-center gap-2"
+                       >
+                         {t('home.ctaBtn1')} <ArrowRight size={18} />
+                       </motion.button>
+                    </NavLink>
+                    <a href="tel:+9198XXXXXXXX">
+                      <motion.button 
+                         whileHover={{ scale: 1.05 }}
+                         whileTap={{ scale: 0.95 }}
+                         className="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-full font-bold hover:bg-white/20 transition-all flex items-center gap-2"
+                       >
+                         <Phone size={18} /> {t('home.ctaBtn2')}
+                       </motion.button>
+                    </a>
+                 </div>
+               </motion.div>
+
+               {/* Right: Pandit Digital Card */}
+               <motion.div
+                 initial={{ opacity: 0, x: 50, rotateY: 10 }}
+                 whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                 viewport={{ once: true }}
+                 className="relative perspective-1000"
+               >
+                 {/* Glowing Effect */}
+                 <div className="absolute inset-0 bg-saffron-500/20 blur-[80px] rounded-full"></div>
+
+                 <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-[40px] p-8 md:p-10 shadow-2xl overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-32 bg-gradient-to-br from-saffron-500/20 to-purple-500/20 blur-3xl rounded-full translate-x-10 -translate-y-10"></div>
+                    
+                    <div className="flex items-center gap-6 mb-8 relative z-10">
+                       <div className="w-24 h-24 rounded-full border-4 border-saffron-500/30 p-1">
+                          <img src={PANDIT_IMAGE} alt="Pandit Anil Kumar Vyas" className="w-full h-full object-cover rounded-full bg-stone-800" />
+                       </div>
+                       <div>
+                          <h3 className="text-2xl font-serif font-bold text-white">Pandit Anil Kumar Vyas</h3>
+                          <p className="text-saffron-400 text-sm font-medium uppercase tracking-wide">Vedic Astrologer & Ritualist</p>
+                          <div className="flex gap-1 mt-2">
+                             {[1,2,3,4,5].map(i => <Star key={i} size={12} className="text-yellow-400 fill-current" />)}
+                          </div>
+                       </div>
+                    </div>
+
+                    <div className="space-y-4 relative z-10">
+                       <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                          <div className="w-10 h-10 rounded-full bg-saffron-500/20 flex items-center justify-center text-saffron-400">
+                             <Phone size={20} />
+                          </div>
+                          <div>
+                             <p className="text-xs text-stone-400 uppercase font-bold">Call Now</p>
+                             <p className="text-white font-mono">+91 98XXX XXXXX</p>
+                          </div>
+                       </div>
+                       
+                       <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                          <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                             <Mail size={20} />
+                          </div>
+                          <div>
+                             <p className="text-xs text-stone-400 uppercase font-bold">Email</p>
+                             <p className="text-white">contact@ambikajyotish.com</p>
+                          </div>
+                       </div>
+
+                       <div className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
+                          <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                             <MapPin size={20} />
+                          </div>
+                          <div>
+                             <p className="text-xs text-stone-400 uppercase font-bold">Location</p>
+                             <p className="text-white">Vadodara, Gujarat</p>
+                          </div>
+                       </div>
+                    </div>
+                    
+                    <div className="mt-8 text-center">
+                       <p className="text-xs text-stone-500">Available Mon-Sat: 10:00 AM - 7:00 PM</p>
+                    </div>
+                 </div>
+               </motion.div>
+            </div>
+         </div>
       </section>
     </div>
   );

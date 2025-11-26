@@ -1,14 +1,18 @@
+
 import React from 'react';
 import { PANDIT_IMAGE } from '../constants';
+import { useLanguage } from '../LanguageContext';
 
 const About: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
-    <div className="bg-white min-h-screen py-16">
+    <div className="bg-white min-h-screen py-16 relative z-10">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="text-saffron-600 font-bold tracking-widest uppercase text-sm">The Legacy</span>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-saffron-900 mt-2">Pandit Anil Kumar Vyas</h1>
+          <span className="text-saffron-600 font-bold tracking-widest uppercase text-sm">{t('aboutPage.subtitle')}</span>
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-saffron-900 mt-2">{t('aboutPage.title')}</h1>
           <div className="h-1 w-24 bg-saffron-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
@@ -31,49 +35,40 @@ const About: React.FC = () => {
 
           {/* Text Side */}
           <div className="space-y-6">
-            <h2 className="text-2xl font-serif font-bold text-stone-800">Custodian of Vedic Tradition</h2>
+            <h2 className="text-2xl font-serif font-bold text-stone-800">{t('aboutPage.tagline')}</h2>
             <p className="text-stone-600 leading-relaxed text-lg">
-              "Pandit Anil Kumar Vyas is not merely an astrologer; he is a custodian of the Vedic tradition. With over 25 years of rigorous Sadhana, he stands as a beacon of spiritual guidance in Vadodara."
+              "{t('aboutPage.desc')}"
             </p>
 
             <div className="bg-saffron-50 p-6 rounded-xl border border-saffron-100">
-              <h3 className="font-bold text-saffron-800 mb-4">Educational Excellence</h3>
+              <h3 className="font-bold text-saffron-800 mb-4">{t('aboutPage.eduTitle')}</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-2 h-2 bg-saffron-500 rounded-full"></span>
-                  <div>
-                    <span className="font-bold text-stone-800">Jyotish Visharad:</span>
-                    <span className="text-stone-600 block text-sm">Gold Medalist from Bharatiya Vidya Bhavan.</span>
-                  </div>
+                  <span className="text-stone-700 text-sm">{t('aboutPage.edu1')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-2 h-2 bg-saffron-500 rounded-full"></span>
-                  <div>
-                    <span className="font-bold text-stone-800">Karmakand Bhaskar:</span>
-                    <span className="text-stone-600 block text-sm">Certified in Rigvedic and Yajurvedic rituals from Kashi (Varanasi).</span>
-                  </div>
+                  <span className="text-stone-700 text-sm">{t('aboutPage.edu2')}</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="mt-1 w-2 h-2 bg-saffron-500 rounded-full"></span>
-                  <div>
-                    <span className="font-bold text-stone-800">Vastu Shastri:</span>
-                    <span className="text-stone-600 block text-sm">Advanced certification in Residential & Industrial Vastu.</span>
-                  </div>
+                  <span className="text-stone-700 text-sm">{t('aboutPage.edu3')}</span>
                 </li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-bold text-saffron-800 mb-2">The Lineage</h3>
+              <h3 className="font-bold text-saffron-800 mb-2">{t('aboutPage.lineageTitle')}</h3>
               <p className="text-stone-600 text-sm leading-relaxed">
-                Hailing from a traditional Brahmin family of North Gujarat, Panditji inherited the secret knowledge of Nadi Jyotish and Tantra Shastra (Sattvic) from his forefathers.
+                {t('aboutPage.lineageDesc')}
               </p>
             </div>
 
             <div>
-              <h3 className="font-bold text-saffron-800 mb-2">Our Mission</h3>
+              <h3 className="font-bold text-saffron-800 mb-2">{t('aboutPage.missionTitle')}</h3>
               <p className="text-stone-600 text-sm leading-relaxed italic border-l-4 border-saffron-400 pl-4">
-                "To demystify astrology and make high-quality Vedic rituals accessible to the common man without superstition."
+                "{t('aboutPage.missionDesc')}"
               </p>
             </div>
           </div>

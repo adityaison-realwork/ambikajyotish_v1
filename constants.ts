@@ -3,7 +3,7 @@ import { Mantra } from './types';
 
 // Images
 export const HERO_IMAGE = "https://images.unsplash.com/photo-1600609842388-3e4b7c8d9638?q=80&w=2500&auto=format&fit=crop"; 
-export const PANDIT_IMAGE = "https://png.pngtree.com/png-vector/20230918/ourmid/pngtree-indian-priest-png-image_10134484.png"; 
+export const PANDIT_IMAGE = "https://i.ibb.co/sJw3fHsV/Babaji11.jpg"; 
 
 export const CONTACT_INFO = {
   phone: "+91 98XXX XXXXX",
